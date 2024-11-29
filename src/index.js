@@ -18,8 +18,8 @@ function generateGrid(size = 16) {
         for (let i = 0; i < size; i++) {
             let squareElement = document.createElement("div");
             squareElement.classList.add("square");
-            squareElement.dataset.row = j; // Dodanie atrybutów do identyfikacji
-            squareElement.dataset.col = i; // wiersza i kolumny
+            squareElement.dataset.row = j; // Add attributes to identify the row
+            squareElement.dataset.col = i; // Add attributes to identify the column
             squareElement.addEventListener("mouseover", () => {
                 if (trigger === true) {
                     highlightCircle(j, i, 3, size);
@@ -31,7 +31,7 @@ function generateGrid(size = 16) {
     }
 }
 
-generateGrid(100); // Siatka 16x16
+generateGrid(100); // Grid size: 100x100
 
 let trigger = false;
 document.addEventListener('mousedown', function () {
@@ -46,7 +46,7 @@ function decrementBackground(square) {
     square.style.backgroundColor = `rgb(255, 255, 255)`;
 }
 
-// Funkcja podświetlająca koło o zadanym promieniu
+// Function to highlight a circle with a given radius
 function highlightCircle(centerRow, centerCol, radius, gridSize) {
     const rows = document.querySelectorAll('.row');
 
@@ -72,7 +72,7 @@ function createImageFromGrid() {
     canvas.width = width;
     canvas.height = height;
 
-    // Rysowanie obrazu z siatki
+    // Drawing the image from the 100x100 grid
     for (let y = 0; y < height; y++) {
         const row = rows[y];
         for (let x = 0; x < width; x++) {
@@ -85,50 +85,78 @@ function createImageFromGrid() {
         }
     }
 
-    // Generowanie URL dla obrazu
-    const imageUrl = canvas.toDataURL();
-    const imgElement = document.createElement("img");
-    imgElement.src = imageUrl;
-    imgElement.classList.add("img-canvas");
+    // Creating a scaled-down image of 20x20
+    const resizedCanvas = document.createElement("canvas");
+    const resizedCtx = resizedCanvas.getContext("2d");
+    resizedCanvas.width = 20;
+    resizedCanvas.height = 20;
 
+    // Scaling the image from 100x100 to 20x20
+    resizedCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, 20, 20);
+
+    // Adding the scaled-down image to the DOM
+    const imgElement = document.createElement("img");
+    imgElement.src = resizedCanvas.toDataURL(); // Convert to image
+    imgElement.classList.add("img-canvas");
+    imgElement.style.imageRendering = "pixelated"; // Important: display image as sharp and pixelated
     container.appendChild(imgElement);
 
-    // Skala do 20x20 px
-    const imageData = resizeImageTo20x20(imgElement);
-    const mnistData = convertImageDataToMNISTFormat(imageData);
+    // Scale down to 20x20 pixels
+    const resizedImageData = downsampleTo20x20(canvas);
+    const mnistData = convertImageDataToMNISTFormat(resizedImageData);
 
     console.log(mnistData);
 }
 
-// Przekształcanie obrazu na 20x20, zachowując proporcje
-function resizeImageTo20x20(imageElement) {
-    const canvas = document.createElement("canvas");
+function downsampleTo20x20(canvas) {
     const ctx = canvas.getContext("2d");
+    const originalImageData = ctx.getImageData(0, 0, 100, 100); // Data for the 100x100 image
+    const data = originalImageData.data;
 
-    const width = imageElement.naturalWidth;
-    const height = imageElement.naturalHeight;
+    const downsampledData = [];
+    const blockSize = 5; // Combine 5x5 pixels into one
 
-    let newWidth, newHeight;
+    for (let y = 0; y < 20; y++) {
+        for (let x = 0; x < 20; x++) {
+            let rSum = 0, gSum = 0, bSum = 0, count = 0;
 
-    // Obliczanie proporcji
-    if (width > height) {
-        newHeight = Math.round((20 / width) * height);
-        newWidth = 20;
-    } else {
-        newWidth = Math.round((20 / height) * width);
-        newHeight = 20;
+            // Process the 5x5 block
+            for (let j = 0; j < blockSize; j++) {
+                for (let i = 0; i < blockSize; i++) {
+                    const pixelX = x * blockSize + i;
+                    const pixelY = y * blockSize + j;
+                    const index = (pixelY * 100 + pixelX) * 4; // Index in the image data array
+
+                    rSum += data[index];     // Red channel
+                    gSum += data[index + 1]; // Green channel
+                    bSum += data[index + 2]; // Blue channel
+                    count++;
+                }
+            }
+
+            // Average the color values
+            const rAvg = Math.round(rSum / count);
+            const gAvg = Math.round(gSum / count);
+            const bAvg = Math.round(bSum / count);
+
+            downsampledData.push(rAvg, gAvg, bAvg, 255); // Add color and alpha (fully opaque)
+        }
     }
 
-    canvas.width = 20;
-    canvas.height = 20;
+    // Create a new 20x20 image
+    const resizedCanvas = document.createElement("canvas");
+    const resizedCtx = resizedCanvas.getContext("2d");
+    resizedCanvas.width = 20;
+    resizedCanvas.height = 20;
 
-    ctx.drawImage(imageElement, 0, 0, newWidth, newHeight, (20 - newWidth) / 2, (20 - newHeight) / 2, newWidth, newHeight);
+    const newImageData = resizedCtx.createImageData(20, 20);
+    newImageData.data.set(downsampledData);
+    resizedCtx.putImageData(newImageData, 0, 0);
 
-    const imageData = ctx.getImageData(0, 0, 20, 20);
-    return imageData.data;
+    return newImageData.data;
 }
 
-// Konwersja danych obrazu na format MNIST (0 dla białych, 1 dla czarnych)
+// Convert image data to MNIST format (1 for white, 0 for black)
 function convertImageDataToMNISTFormat(imageData) {
     const mnistData = [];
 
@@ -140,8 +168,8 @@ function convertImageDataToMNISTFormat(imageData) {
 
         const gray = (r + g + b) / 3;
 
-        const threshold = 200;
-        const scaledGray = gray > threshold ? 0.0 : 1.0;
+        const threshold = 125;
+        const scaledGray = gray > threshold ? 1.0 : 0.0;
 
         mnistData.push(scaledGray);
     }
