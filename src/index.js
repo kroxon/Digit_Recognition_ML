@@ -1,13 +1,17 @@
 import './styles.css';
+import { createImageFromGrid } from './display.js';
 
 const container = document.querySelector(".container");
 const gridContainer = document.createElement("div");
+const imgContainer = document.createElement("div");
 gridContainer.id = "grid-container";
+imgContainer.id = "img-container";
 container.appendChild(gridContainer);
+container.appendChild(imgContainer);
 
 const generateButton = document.createElement('button');
 generateButton.textContent = 'Generate Image';
-generateButton.addEventListener('click', createImageFromGrid);
+generateButton.addEventListener('click', () => createImageFromGrid(imgContainer)); 
 document.body.appendChild(generateButton);
 
 function generateGrid(size = 16) {
@@ -60,52 +64,6 @@ function highlightCircle(centerRow, centerCol, radius, gridSize) {
             }
         }
     }
-}
-
-function createImageFromGrid() {
-    let canvas = document.createElement("canvas");
-    let ctx = canvas.getContext("2d");
-    const rows = document.querySelectorAll('.row');
-    const width = rows[0].children.length;
-    const height = rows.length;
-
-    canvas.width = width;
-    canvas.height = height;
-
-    // Drawing the image from the 100x100 grid
-    for (let y = 0; y < height; y++) {
-        const row = rows[y];
-        for (let x = 0; x < width; x++) {
-            const square = row.children[x];
-            const rgb = window.getComputedStyle(square).backgroundColor;
-            const [r, g, b] = rgb.match(/\d+/g).map(Number);
-
-            ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-            ctx.fillRect(x, y, 1, 1);
-        }
-    }
-
-    // Creating a scaled-down image of 20x20
-    const resizedCanvas = document.createElement("canvas");
-    const resizedCtx = resizedCanvas.getContext("2d");
-    resizedCanvas.width = 20;
-    resizedCanvas.height = 20;
-
-    // Scaling the image from 100x100 to 20x20
-    resizedCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, 20, 20);
-
-    // Adding the scaled-down image to the DOM
-    const imgElement = document.createElement("img");
-    imgElement.src = resizedCanvas.toDataURL(); // Convert to image
-    imgElement.classList.add("img-canvas");
-    imgElement.style.imageRendering = "pixelated"; // Important: display image as sharp and pixelated
-    container.appendChild(imgElement);
-
-    // Scale down to 20x20 pixels
-    const resizedImageData = downsampleTo20x20(canvas);
-    const mnistData = convertImageDataToMNISTFormat(resizedImageData);
-
-    console.log(mnistData);
 }
 
 function downsampleTo20x20(canvas) {
