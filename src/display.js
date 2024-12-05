@@ -62,7 +62,6 @@ function convertImageDataToMNISTFormat(imageData) {
         const g = imageData[i + 1];
         const b = imageData[i + 2];
         const a = imageData[i + 3];
-
         const gray = (r + g + b) / 3;
 
         const threshold = 125;
