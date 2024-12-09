@@ -1,5 +1,10 @@
 import './styles.css';
 import { createImageFromGrid } from './display.js';
+import { loadModel, predictDigit } from './tensorflowModel.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadModel(); // Ładujemy model
+});
 
 const container = document.querySelector(".container");
 const gridContainer = document.createElement("div");
@@ -12,10 +17,14 @@ container.appendChild(imgContainer);
 const generateButton = document.createElement('button');
 generateButton.textContent = 'Generate Image';
 let dataToPredction;
-generateButton.addEventListener('click', () => {
+generateButton.addEventListener('click', async () => {
     dataToPredction = createImageFromGrid(imgContainer)
     console.log("data to prediction:");
     console.log(dataToPredction);
+
+    // prediction
+    const predictedDigit = await predictDigit(dataToPredction);
+    alert(`Rozpoznana cyfra: ${predictedDigit}`);
 });
 document.body.appendChild(generateButton);
 
