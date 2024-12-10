@@ -1,33 +1,33 @@
+// Import TensorFlow.js
 import * as tf from '@tensorflow/tfjs';
 
-let model;
-
-export async function loadModel() {
-    try {
-        model = await tf.loadLayersModel('./models/model.json');
-        console.log('Model załadowany pomyślnie!');
-    } catch (error) {
-        console.error('Błąd podczas ładowania modelu:', error);
-    }
+// Load the model
+async function loadModel() {
+    const modelPath = './models/model.json';
+    const model = await tf.loadLayersModel(modelPath);
+    console.log(model.summary());
+    console.log('Model loaded successfully!');
+    return model;
 }
 
-// prediction MNIST data (20x20)
-export async function predictDigit(data) {
-    if (!model) {
-        console.error('Model nie został załadowany!');
-        return;
-    }
+// Predict function
+async function predictDigit(data) {
+    // Ensure the input data shape matches the model's expected input shape
+    // The model expects a 400-element flattened array (20x20 image) as input
+    const inputShape = [1, 400]; // 1 sample, 400 features
+    const inputTensor = tf.tensor(data, inputShape);
 
-    try {
-        const tensor = tf.tensor4d(data, [1, 20, 20, 1]);
+    const model = await loadModel();
 
-        const predictions = model.predict(tensor);
+    // Perform the prediction
+    const prediction = model.predict(inputTensor);
 
-        const predictedIndex = predictions.argMax(-1).dataSync()[0];
+    // Convert the logits to probabilities
+    const probabilities = prediction.softmax();
+    const predictedClass = probabilities.argMax(1).dataSync()[0];
 
-        console.log(`Predykcja: ${predictedIndex}`);
-        return predictedIndex;
-    } catch (error) {
-        console.error('Błąd podczas predykcji:', error);
-    }
+    console.log('Prediction:', predictedClass);
+    return predictedClass;
 }
+
+export { loadModel, predictDigit };
