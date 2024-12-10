@@ -3,7 +3,8 @@ import { createImageFromGrid } from './display.js';
 import { loadModel, predictDigit } from './tensorflowModel.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadModel(); // Ładujemy model
+    await loadModel();
+    console.log("Model loaded!");
 });
 
 const container = document.querySelector(".container");
@@ -24,7 +25,7 @@ generateButton.addEventListener('click', async () => {
 
     // prediction
     const predictedDigit = await predictDigit(dataToPredction);
-    alert(`Rozpoznana cyfra: ${predictedDigit}`);
+    alert(`Predicted digit: ${predictedDigit}`);
 });
 document.body.appendChild(generateButton);
 
