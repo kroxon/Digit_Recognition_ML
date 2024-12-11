@@ -1,10 +1,13 @@
 // Import TensorFlow.js
-import * as tf from '@tensorflow/tfjs';
+// import * as tf from '@tensorflow/tfjs';
 
 // Load the model
 async function loadModel() {
-    const modelPath = './models/model.json';
-    const model = await tf.loadLayersModel(modelPath);
+    const modelPath = "./models/model.json";
+    const tf = require("@tensorflow/tfjs");
+    const tfn = require("@tensorflow/tfjs-node"); 
+    const handler = tfn.io.fileSystem(modelPath);
+    const model = await tf.loadLayersModel(handler);
     console.log(model.summary());
     console.log('Model loaded successfully!');
     return model;
