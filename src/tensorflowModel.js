@@ -1,36 +1,33 @@
-// Import TensorFlow.js
-// import * as tf from '@tensorflow/tfjs';
+const tf = window.tf;
 
-// Load the model
+let model = null;
+
+// Funkcja ładowania modelu
 async function loadModel() {
-    const modelPath = "./models/model.json";
-    const tf = require("@tensorflow/tfjs");
-    const tfn = require("@tensorflow/tfjs-node"); 
-    const handler = tfn.io.fileSystem(modelPath);
-    const model = await tf.loadLayersModel(handler);
-    console.log(model.summary());
-    console.log('Model loaded successfully!');
+    if (!model) {
+        model = await tf.loadLayersModel("./models/model.json");
+        console.log("Model załadowany:", model.summary());
+    }
     return model;
 }
 
-// Predict function
+// Funkcja predykcji
 async function predictDigit(data) {
-    // Ensure the input data shape matches the model's expected input shape
-    // The model expects a 400-element flattened array (20x20 image) as input
-    const inputShape = [1, 400]; // 1 sample, 400 features
-    const inputTensor = tf.tensor(data, inputShape);
+    try {
+        // Tworzenie tensora wejściowego o kształcie [1, 400] - 1 próbka, 400 cech
+        const inputShape = [1, 400]; 
+        const inputTensor = tf.tensor(data, inputShape);
 
-    const model = await loadModel();
+        const model = await loadModel();
+        const prediction = model.predict(inputTensor);
 
-    // Perform the prediction
-    const prediction = model.predict(inputTensor);
+        // Normalizacja wyników predykcji
+        const probabilities = prediction.softmax();
+        const predictedClass = probabilities.argMax(1).dataSync()[0];
 
-    // Convert the logits to probabilities
-    const probabilities = prediction.softmax();
-    const predictedClass = probabilities.argMax(1).dataSync()[0];
-
-    console.log('Prediction:', predictedClass);
-    return predictedClass;
+        console.log("Prediction:", predictedClass);
+        return predictedClass;
+    } catch (error) {
+        console.error("Błąd przy wykonywaniu predykcji:", error);
+    }
 }
-
-export { loadModel, predictDigit };
