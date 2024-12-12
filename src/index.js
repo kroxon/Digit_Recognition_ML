@@ -1,7 +1,3 @@
-import './styles.css';
-import { createImageFromGrid } from './display.js';
-import { loadModel, predictDigit } from './tensorflowModel.js';
-
 document.addEventListener('DOMContentLoaded', async () => {
     await loadModel();
     console.log("Model loaded!");
