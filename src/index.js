@@ -32,7 +32,7 @@ canvas.addEventListener("mousemove", (e) => {
 
 canvas.addEventListener("mouseup", () => {
     isDrawing = false;
-    canvas.style.cursor = 'default'; // przywrócenie normalnego kursora
+    canvas.style.cursor = 'default'; 
 });
 
 canvas.addEventListener("mouseout", () => {
@@ -50,20 +50,21 @@ async function loadData() {
     X = X.map(row => row.map(value => value > 0.5 ? 1 : 0));
 
     if (Array.isArray(y) && Array.isArray(y[0])) {
-        y = y.map(row => row[0]); // Przyjmujemy, że interesuje nas pierwsza wartość w każdej podtablicy
+        y = y.map(row => row[0]); 
     }
 
-    X = tf.tensor2d(X); // Konwersja X na tensor 2D
-    y = tf.tensor1d(y); // Konwersja y na tensor 1D
+    X = tf.tensor2d(X); 
+    y = tf.tensor1d(y); 
 
     return { X, y };
 }
 
 function createModel() {
-    const model = tf.sequential();
-    model.add(tf.layers.dense({ units: 25, activation: 'relu', inputShape: [400], name: 'L1' }));
-    model.add(tf.layers.dense({ units: 15, activation: 'relu', name: 'L2' }));
-    model.add(tf.layers.dense({ units: 10, activation: 'linear', name: 'L3' }));
+const model = tf.sequential();
+model.add(tf.layers.dense({ units: 128, activation: 'relu', inputShape: [400] })); 
+model.add(tf.layers.dropout({ rate: 0.5 })); 
+model.add(tf.layers.dense({ units: 64, activation: 'relu' }));
+model.add(tf.layers.dense({ units: 10, activation: 'softmax' })); 
 
     return model;
 }
@@ -71,14 +72,14 @@ function createModel() {
 async function trainModel(model, X, y) {
     model.compile({
         loss: 'sparseCategoricalCrossentropy',
-        optimizer: tf.train.adam(0.001),
+        optimizer: tf.train.adam(0.0005),
         metrics: ['accuracy']
     });
 
     const history = await model.fit(X, y, {
         epochs: 40,
-        batchSize: 32, // Możesz dostosować rozmiar partii
-        shuffle: true, // Losowe tasowanie danych
+        batchSize: 32, 
+        shuffle: true, 
         callbacks: {
             onEpochEnd: (epoch, logs) => {
                 console.log(`Epoka ${epoch + 1}: loss = ${logs.loss.toFixed(4)}, accuracy = ${logs.acc.toFixed(4)}`);
