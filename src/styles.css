@@ -26,7 +26,8 @@ body {
 
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
 }
 
 #grid-container,
@@ -63,4 +64,18 @@ button:hover {
 button:active {
   box-shadow: none;
   top: 5px;
+}
+
+canvas {
+  border: 1px solid black;
+  cursor: crosshair;
+}
+
+.black {
+  background-color: black;
+}
+
+.white {
+  background-color: white;
+  border: 1px solid #ccc;
 }
