@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digit recognition</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-    <script src="tensorflowModel.js" defer></script>
+
     <script src="index.js" defer></script>
     <script src="display.js" defer></script>
     <link rel="stylesheet" href="styles.css">
@@ -19,7 +18,10 @@
             <!-- <button type="button" aria-label="Go to Home page">Home</button> -->
         </nav>
     </header>
-    <div class="container"></div>
+    <div class="container">
+        <canvas id="drawingCanvas" width="800" height="600"></canvas>
+        <div class="resultImg" id="gridContainer"></div>
+    </div>
 </body>
 
 </html>
