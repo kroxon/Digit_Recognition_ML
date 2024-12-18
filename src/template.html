@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digit recognition</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script> -->
+
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
 </head>
 
 <body>
@@ -15,6 +19,9 @@
         </nav>
     </header>
     <div class="container">
+        <canvas id="drawingCanvas" width="800" height="600"></canvas>
+        <div class="resultImg" id="gridContainer"></div>
+    </div>
 </body>
 
 </html>
