@@ -68,3 +68,14 @@ export async function predictDigit(dataX, model, index = 4015) {
 
     return largestPredictionIndex;
 }
+
+// save model
+export async function saveModel(model) {
+    await model.save('downloads://model');
+}
+
+export async function loadModel(modelUrl) {
+    const model = await tf.loadLayersModel(modelUrl);
+    console.log('Model loaded successfully');
+    return model;
+}
