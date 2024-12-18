@@ -13,6 +13,7 @@ module.exports = merge(common, {
     },
     port: 8080,
     open: true,
-    hot: false,
+    hot: true, // Włączenie hot module replacement
+    historyApiFallback: true,
   },
 });

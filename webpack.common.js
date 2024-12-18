@@ -16,6 +16,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: "src/models", to: "models" }, 
+        { from: "src/data", to: "data" }, 
       ],
     }),
   ],
