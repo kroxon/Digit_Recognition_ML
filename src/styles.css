@@ -87,3 +87,22 @@ canvas {
   height: 200px;
   gap: 1px;
 }
+
+#digitGrid div {
+  width: 20px;
+  height: 20px;
+}
+
+.prediction {
+  font-size: 20px;
+  font-weight: 700;
+  color: #D98555;
+  text-align: center;
+}
+
+#predictions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
