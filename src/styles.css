@@ -78,3 +78,12 @@ canvas {
 .white {
   background-color: white;
 }
+
+#digitGrid {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  width: 200px;
+  height: 200px;
+  gap: 1px;
+}
