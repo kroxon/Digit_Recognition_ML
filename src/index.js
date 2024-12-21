@@ -5,7 +5,7 @@ import { setupCanvas, getCanvasImageData } from './canvas';
 async function main() {
     let model;
     try {
-        // const { X, y } = await loadData();
+        const { X, y } = await loadData();
 
         // model = createModel();
 
@@ -14,7 +14,7 @@ async function main() {
         // const save = await saveModel(model);
 
         // Load the pre-trained model
-        model = await loadModel('/models/model.json');
+        model = await loadModel('./models/model.json');
 
         // await predictDigit(X, model, 3445); // Predict a example digit  
 
@@ -22,12 +22,12 @@ async function main() {
         setupCanvas(async () => {
             const imageData = getCanvasImageData();
             console.log(imageData.arraySync());
-            const prediction = await predictDigit2(imageData, model);
+            const prediction = await predictDigit(imageData, model);
             console.log(`Predicted digit: ${prediction}`);
         });
 
     } catch (err) {
-        console.error('Error during training:', err);
+        console.error('Error during training or prediction:', err);
     }
 
 
