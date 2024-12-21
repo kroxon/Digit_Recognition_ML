@@ -3,8 +3,8 @@ import dataX from './data/X.json';
 import dataY from './data/y.json';
 
 export async function loadData() {
-    const XResponse = await fetch('./data/X.json');
-    const yResponse = await fetch('./data/y.json');
+    const XResponse = await fetch('/data/X.json');
+    const yResponse = await fetch('/data/y.json');
 
     let X = await XResponse.json();
     let y = await yResponse.json();
@@ -52,17 +52,17 @@ export async function trainModel(model, X, y) {
     return history;
 }
 
-export async function predictDigit(dataX, model, index = 4015) {
-    const imageOfDigit = dataX.slice([index, 0], [1, 400]); // Pobranie obrazu cyfry
+export async function predictDigitFromXData(dataX, model, index = 4015) {
+    const imageOfDigit = dataX.slice([index, 0], [1, 400]); 
 
     console.log("Image of digit:");
     console.log(imageOfDigit.arraySync());
 
-    displayDigit(imageOfDigit); // Wyświetlenie obrazu
+    displayDigit(imageOfDigit); 
 
-    const prediction = model.predict(imageOfDigit); // Przewidywanie
-    const predictionArray = await prediction.array(); // Konwersja na tablicę
-    const largestPredictionIndex = prediction.argMax(-1).dataSync()[0]; // Znalezienie największej wartości
+    const prediction = model.predict(imageOfDigit); 
+    const predictionArray = await prediction.array(); 
+    const largestPredictionIndex = prediction.argMax(-1).dataSync()[0]; 
 
     console.log("Predicting: ");
     console.log(predictionArray);
@@ -71,7 +71,7 @@ export async function predictDigit(dataX, model, index = 4015) {
     return largestPredictionIndex;
 }
 
-export async function predictDigit2(imageData, model) {
+export async function predictDigit(imageData, model) {
     if (!(imageData instanceof tf.Tensor)) {
         throw new Error('imageData must be a Tensor');
     }

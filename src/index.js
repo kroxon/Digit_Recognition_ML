@@ -1,11 +1,11 @@
 import './styles.css';
-import { loadData, loadModel, predictDigit, predictDigit2, createModel, trainModel, saveModel } from './tensorflowModel';
+import { loadData, loadModel, predictDigit, predictDigitFromXData, createModel, trainModel, saveModel } from './tensorflowModel';
 import { setupCanvas, getCanvasImageData } from './canvas';
 
 async function main() {
     let model;
     try {
-        const { X, y } = await loadData();
+        // const { X, y } = await loadData();
 
         // model = createModel();
 
@@ -14,9 +14,9 @@ async function main() {
         // const save = await saveModel(model);
 
         // Load the pre-trained model
-        model = await loadModel('./models/model.json');
+        model = await loadModel('/models/model.json');
 
-        // await predictDigit(X, model, 3445); // Predict a example digit  
+        // await predictDigitFromXData(X, model, 3445); // Predict a example digit  
 
         // Setup canvas and add a button to predict the drawn digit
         setupCanvas(async () => {
