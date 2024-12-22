@@ -1,6 +1,7 @@
 import './styles.css';
 import { loadData, loadModel, predictDigit, predictDigitFromXData, createModel, trainModel, saveModel } from './tensorflowModel';
-import { setupCanvas, getCanvasImageData } from './canvas';
+import { setupCanvas, getCanvasImageData, clearCanvas } from './canvas';
+import { destroyChart } from './display';
 
 async function main() {
     let model;
@@ -21,9 +22,16 @@ async function main() {
         // Setup canvas and add a button to predict the drawn digit
         setupCanvas(async () => {
             const imageData = getCanvasImageData();
-            console.log(imageData.arraySync());
             const prediction = await predictDigit(imageData, model);
-            console.log(`Predicted digit: ${prediction}`);
+        });
+
+        // Setup clear button
+        const clearButton = document.getElementById('clearButton');
+        clearButton.addEventListener('click', () => {
+            clearCanvas();
+            document.getElementById('digitResult').innerHTML = '';
+            destroyChart();
+            document.getElementById('predictionLabel').innerHTML = '';
         });
 
     } catch (err) {
