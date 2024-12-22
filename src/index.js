@@ -14,7 +14,7 @@ async function main() {
         // const save = await saveModel(model);
 
         // Load the pre-trained model
-        model = await loadModel('./models/model.json');
+        model = await loadModel('/models/model.json');
 
         // await predictDigitFromXData(X, model, 3445); // Predict a example digit  
 

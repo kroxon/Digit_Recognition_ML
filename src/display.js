@@ -1,4 +1,6 @@
-export function displayDigit(imageOfDigit) {
+import { setupCanvas } from "./canvas";
+
+export function displayDigit(imageOfDigit, largestPredictionIndex) {
 
     const reshapedImage = imageOfDigit.reshape([20, 20]);   // Shape the image to 20x20
     const imageArray = reshapedImage.arraySync();   // Convert to array
@@ -6,13 +8,7 @@ export function displayDigit(imageOfDigit) {
     const rotatedImageArray = imageArray[0].map(
         (_, colIndex) => imageArray.map(row => row[colIndex])); // Rotate the image
 
-
-    let container = document.getElementById('digitGrid');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'digitGrid';
-        document.body.appendChild(container);
-    }
+    let container = document.getElementById('digitResult');
 
     container.innerHTML = '';
 
@@ -28,19 +24,56 @@ export function displayDigit(imageOfDigit) {
     }
 }
 
-export function displayPredictions(predictionsArray) {
-    const container = document.getElementById('predictions');
-    container.innerHTML = '';
 
-
-    for (let i = 0; i < predictionsArray[0].length; i++) {
-        const percentage = (predictionsArray[0][i] * 100).toFixed(2);
-        const digit = i;
-        const prediction = predictionsArray[i];
-        const div = document.createElement('div');
-        div.className = 'prediction';
-        div.innerHTML = `${digit} - ${percentage}%`;
-        container.appendChild(div);
-    }
+export function displayPredictions(predictionsArray, largestPredictionIndex) {
+    const label = document.getElementById('predictionLabel');
+    label.innerHTML = `Predicted digit: ${largestPredictionIndex} with ${(predictionsArray[0][largestPredictionIndex] * 100).toFixed(2)}% of certainty`;
+    const ctx = document.getElementById('chart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Array.from({ length: 10 }, (_, i) => i),
+            datasets: [{
+                label: 'Predictions',
+                data: predictionsArray[0].map(prediction => prediction * 100),
+                backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                borderColor: 'rgba(0, 0, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: { 
+                    ticks: {
+                        font: {
+                            size: 16, 
+                        },
+                        color: 'white', 
+                    }
+                },
+                y: { 
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 16, 
+                        },
+                        color: 'white',
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 16, 
+                        },
+                        color: 'white', 
+                    }
+                }
+            }
+        }
+    });
+    
 }
+
 
