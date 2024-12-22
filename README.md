@@ -2,6 +2,8 @@
 
 This project is a web-based digit recognition application that allows users to draw digits on a canvas and get real-time predictions using a pre-trained machine learning model. The application leverages TensorFlow.js for model inference and provides an interactive interface for users to test the digit recognition capabilities.
 
+![alt text](image.png)
+
 ## Features
 
 - **Interactive Canvas**: Draw digits on a canvas and get instant predictions.
