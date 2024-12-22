@@ -24,12 +24,21 @@ export function displayDigit(imageOfDigit, largestPredictionIndex) {
     }
 }
 
+let chartInstance = null;
+
 
 export function displayPredictions(predictionsArray, largestPredictionIndex) {
     const label = document.getElementById('predictionLabel');
-    label.innerHTML = `Predicted digit: ${largestPredictionIndex} with ${(predictionsArray[0][largestPredictionIndex] * 100).toFixed(2)}% of certainty`;
+    label.innerHTML = `Predicted digit: ${largestPredictionIndex}<br>with ${(predictionsArray[0][largestPredictionIndex] * 100).toFixed(2)}% of certainty`;
+
     const ctx = document.getElementById('chart').getContext('2d');
-    const chart = new Chart(ctx, {
+
+
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
+
+    chartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: Array.from({ length: 10 }, (_, i) => i),
@@ -43,19 +52,19 @@ export function displayPredictions(predictionsArray, largestPredictionIndex) {
         },
         options: {
             scales: {
-                x: { 
+                x: {
                     ticks: {
                         font: {
-                            size: 16, 
+                            size: 16,
                         },
-                        color: 'white', 
+                        color: 'white',
                     }
                 },
-                y: { 
+                y: {
                     beginAtZero: true,
                     ticks: {
                         font: {
-                            size: 16, 
+                            size: 16,
                         },
                         color: 'white',
                     }
@@ -65,15 +74,19 @@ export function displayPredictions(predictionsArray, largestPredictionIndex) {
                 legend: {
                     labels: {
                         font: {
-                            size: 16, 
+                            size: 16,
                         },
-                        color: 'white', 
+                        color: 'white',
                     }
                 }
             }
         }
     });
-    
 }
 
-
+export function destroyChart() {
+    if (chartInstance) {
+        chartInstance.destroy();
+        chartInstance = null;
+    }
+}

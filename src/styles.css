@@ -122,3 +122,7 @@ canvas {
 #predictionList {
   grid-area: 2 / 3 / 4 / 6;
 }
+
+canvas#chart {
+  width: 100%;
+}

@@ -48,21 +48,17 @@ export function getCanvasImageData() {
     const canvas = document.getElementById('drawingCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Pobierz dane obrazu z canvas
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
 
-    const gridSize = 20; // 20 wierszy i 20 kolumn
-    const segmentWidth = canvas.width / gridSize;  // szerokość jednej komórki
-    const segmentHeight = canvas.height / gridSize;  // wysokość jednej komórki
+    const gridSize = 20;
+    const segmentWidth = canvas.width / gridSize;
+    const segmentHeight = canvas.height / gridSize;
 
-    // Próg jasności
     const threshold = 128;
 
-    // Utwórz tablicę na przetworzone dane (20x20)
     let processedData = Array.from({ length: gridSize }, () => Array(gridSize).fill(0));
 
-    // Iteracja przez każdy segment (20x20)
     for (let row = 0; row < gridSize; row++) {
         for (let col = 0; col < gridSize; col++) {
             const startX = Math.floor(col * segmentWidth);
@@ -73,10 +69,9 @@ export function getCanvasImageData() {
             let totalBrightness = 0;
             let pixelCount = 0;
 
-            // Oblicz średnią jasność dla danego segmentu
             for (let y = startY; y < endY; y++) {
                 for (let x = startX; x < endX; x++) {
-                    const index = (y * canvas.width + x) * 4; // indeks w tablicy danych o pikselach
+                    const index = (y * canvas.width + x) * 4;
                     const r = data[index];
                     const g = data[index + 1];
                     const b = data[index + 2];
@@ -90,7 +85,6 @@ export function getCanvasImageData() {
             const averageBrightness = totalBrightness / pixelCount;
             const binaryValue = averageBrightness >= threshold ? 1 : 0;
 
-            // Upewnij się, że row i col są przypisywane prawidłowo
             processedData[row][col] = binaryValue;
         }
     }
@@ -99,11 +93,14 @@ export function getCanvasImageData() {
         processedData.map(row => row[col])
     );
 
-    // Spłaszcz dane do jednowymiarowej tablicy (400 elementów)
     const flattenedData = transposedData.flat();
 
-    // Zwróć tensor jednowymiarowy o długości 400
     const tensor = tf.tensor2d(flattenedData, [1, 400]);
     return tensor;
 }
 
+export function clearCanvas() {
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}

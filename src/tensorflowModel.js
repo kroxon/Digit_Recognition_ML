@@ -55,18 +55,11 @@ export async function trainModel(model, X, y) {
 export async function predictDigitFromXData(dataX, model, index = 4015) {
     const imageOfDigit = dataX.slice([index, 0], [1, 400]);
 
-    console.log("Image of digit:");
-    console.log(imageOfDigit.arraySync());
-
     displayDigit(imageOfDigit);
 
     const prediction = model.predict(imageOfDigit);
     const predictionArray = await prediction.array();
     const largestPredictionIndex = prediction.argMax(-1).dataSync()[0];
-
-    console.log("Predicting: ");
-    console.log(predictionArray);
-    console.log(`Predicted: ${largestPredictionIndex} with ${(predictionArray[0][largestPredictionIndex] * 100).toFixed(2)}% `);
 
     return largestPredictionIndex;
 }
@@ -79,10 +72,7 @@ export async function predictDigit(imageData, model) {
     const prediction = model.predict(imageData);
     const predictionArray = await prediction.array();
     const largestPredictionIndex = prediction.argMax(-1).dataSync()[0];
-    console.log("Predicting a digit:");
-    console.log(predictionArray);
     displayPredictions(predictionArray, largestPredictionIndex);
-    console.log(`Largest Prediction Index: ${largestPredictionIndex}`);
     displayDigit(imageData);
     return largestPredictionIndex;
 }
