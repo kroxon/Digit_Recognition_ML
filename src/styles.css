@@ -90,9 +90,10 @@ canvas {
 .parent {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 25px;
-  grid-row-gap: 25px;
+  grid-template-rows: repeat(5, min-content);
+  gap: 10px;
+  width: 80%;
+  max-width: 1200px;
 }
 
 #drawingCanvas {
@@ -125,4 +126,40 @@ canvas {
 
 canvas#chart {
   width: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .parent {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    width: 100%;
+    padding: 10px;
+  }
+
+  #drawingCanvas {
+    grid-area: 1 / 1 / 2 / 2;
+    width: 100%;
+    height: auto;
+  }
+
+  .buttons {
+    grid-area: 2 / 1 / 3 / 2;
+    grid-template-columns: 1fr;
+  }
+
+  #digitResult {
+    grid-area: 3 / 1 / 4 / 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  #predictionLabel {
+    grid-area: 4 / 1 / 5 / 2;
+    font-size: 1.2em;
+  }
+
+  #predictionList {
+    grid-area: 5 / 1 / 6 / 2;
+  }
 }
