@@ -29,7 +29,7 @@ This project is a web-based digit recognition application that allows users to d
 1. Clone the repository:
    ```bash
    git clone https://github.com/kroxon/Digit_Recognition_ML.git
-   cd digit-recognizer
+   cd Digit_Recognition_ML
    ```
 
 2. Install the dependencies:
