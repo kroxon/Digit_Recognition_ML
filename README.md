@@ -4,6 +4,8 @@ This project is a web-based digit recognition application that allows users to d
 
 ![alt text](image.png)
 
+`https://kroxon.github.io/Digit_Recognition_ML/`
+
 ## Features
 
 - **Interactive Canvas**: Draw digits on a canvas and get instant predictions.
