@@ -40,6 +40,43 @@ export function setupCanvas(onPredict) {
         canvas.style.cursor = 'default';
     });
 
+    // Touch events
+    canvas.addEventListener("touchstart", (e) => {
+        isDrawing = true;
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        [lastX, lastY] = [touch.clientX - rect.left, touch.clientY - rect.top];
+        canvas.style.cursor = 'crosshair'; // change cursor to crosshair
+    });
+
+    canvas.addEventListener("touchmove", (e) => {
+        if (!isDrawing) return;
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(x, y);
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = lineColor;
+        ctx.stroke();
+
+        [lastX, lastY] = [x, y];
+        e.preventDefault(); // Prevent scrolling when drawing
+    });
+
+    canvas.addEventListener("touchend", () => {
+        isDrawing = false;
+        canvas.style.cursor = 'default';
+    });
+
+    canvas.addEventListener("touchcancel", () => {
+        isDrawing = false;
+        canvas.style.cursor = 'default';
+    });
+
     const predictButton = document.getElementById('predictButton');
     predictButton.addEventListener('click', onPredict);
 }
