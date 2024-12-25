@@ -94,6 +94,7 @@ canvas {
   gap: 10px;
   width: 80%;
   max-width: 1200px;
+  padding-top: 20px;
 }
 
 #drawingCanvas {
@@ -135,6 +136,9 @@ canvas#chart {
     grid-template-rows: auto;
     width: 100%;
     padding: 10px;
+    justify-items: center;
+    margin-top: 0;
+    padding: 10px;
   }
 
   #drawingCanvas {
@@ -145,7 +149,15 @@ canvas#chart {
 
   .buttons {
     grid-area: 2 / 1 / 3 / 2;
-    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    justify-items: center;
+  }
+
+  button{
+    width: 80%;
+    margin: 20px;
+    font-size: 1em;
+    padding: 5px;
   }
 
   #digitResult {
