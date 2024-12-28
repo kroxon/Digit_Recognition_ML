@@ -81,4 +81,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [TensorFlow.js](https://www.tensorflow.org/js) for providing the tools to run machine learning models in the browser.
 - [GitHub Pages](https://pages.github.com/) for hosting the application.
-```
