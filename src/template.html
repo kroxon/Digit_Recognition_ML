@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digit recognition</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <!-- <button type="button" aria-label="Go to Home page">Home</button> -->
+        </nav>
+    </header>
+    <div id="predictions"></div>
+    <div class="resultImg" id="gridContainer"></div>
+
+    <div class="parent">
+        <canvas id="drawingCanvas" width="400" height="400"></canvas>
+        <div class="buttons">
+            <button id="predictButton">Predict Digit</button>
+            <button id="clearButton">Clear</button>
+        </div>
+        <div id="digitResult"> </div>
+        <p id="predictionLabel"></p>
+        <div id="predictionList">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+</body>
+
+</html>

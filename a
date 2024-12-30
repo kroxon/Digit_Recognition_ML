@@ -1,0 +1,344 @@
+[33mcommit 24644b19c1e9b96dd4b88f409aa6cb4b48fdf9c9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Prepare css for mobile view
+    
+    Added styles for mobile view.
+
+[33mcommit 1aff7adb70b263352abed75c9822f85751e81d38[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Add a touch canvas handler
+    
+    Added some touch event handlers to the canvas to allow for touch events to be used on mobile devices.
+
+[33mcommit 3bbc5c8c2fe2ddcc7c18b141000c7f27d6305e2c[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Word correction in README.md
+
+[33mcommit 7b23f683b46013ed537242415b6ac2501048fc01[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Add image.png and update README.md
+
+[33mcommit f9c5105fc77428ebae0fa922120f805ff7b53825[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Create a README.md file
+
+[33mcommit 6032a4906c3c39752321392f6dae66d95ba03b46[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Create clear button management
+    
+    Clear button clears the canvas and the prediction result.
+
+[33mcommit 27454421b238bdedd1d343b30ca5ca22dedea517[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Change styles to dark mode
+
+[33mcommit a52290feb526dd8da18c927a41772ec2a4c37485[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Reapair bad path in index.js
+
+[33mcommit 3c7c2f18ea8bbe30ba3fb924b7f6a7f909985538[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Repair wrong path in tensorflowModel.js
+
+[33mcommit 41a8b90f587d7c2a68c12c4db676476a172e0bd7[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Change path model file for pages
+
+[33mcommit 78b58ec795e74aba43ecc851b85691590cfb9e30[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Remove dist folder from remote repository
+
+[33mcommit 5342a123cca27b36ba0c4a3448d29c9bbbbe11a5[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Model train fixes
+
+[33mcommit 585acce99ca70b78ddc84d3597fbbfe9239ad3cd[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Fix model file name
+
+[33mcommit 59a1562c0565a4c7d5262aa29af0a23dbe490a65[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Deployment commit
+
+[33mcommit 887472c5978c2f60233eb9ce563ff0d7eccefa56[m
+Merge: 3fb2607 1c7e1e9
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Merge branch 'main' into gh-pages
+
+[33mcommit 1c7e1e9ffcf20ede541efa5de888224ee343925d[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Change weights file name
+
+[33mcommit 3fb2607260f5d7d2d4ae2a38351d4402800fd8d5[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Deployment commit
+
+[33mcommit 1885b586377046f2d39640fbcdb8f39096685fa8[m
+Merge: 12f1333 de7d99f
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Merge branch 'main' into gh-pages
+
+[33mcommit de7d99f1f94b41f937dfc15358117c51b60fbfb3[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Predict drawn digits using trained model
+    
+    Predicions of drawn digit are displayed on display
+    . Each digit has its own percentage probability
+
+[33mcommit 0e0cd0423d15cc8c0f4368c13e25d272ff4306cb[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Create canvas.js file
+    
+    Create canvas.js file for drawing the canvas and the drawing functions.
+
+[33mcommit 8c7f8148b8965ce095f365ebdb631b813284d454[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Saved and loaded model
+    
+    Pretrained model was saved and loaded successfully.
+    Training the model was not done correctly.
+    Need to fix the training process.
+
+[33mcommit 28fb8f934b6401cb8e1a49e0d86e97c8bae65703[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Remove vscode files
+    
+    Remove vscode files that are not needed.
+
+[33mcommit 12f1333562ad593ef861670e9a6c9b7fcace9e61[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Deployment commit
+
+[33mcommit 973fa94aaed39396f86b8dbc9d50b06df4f294c1[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Deployment commit
+
+[33mcommit 370c2dba14888a8a006b154f1c73522370cc7545[m
+Merge: e573b86 a2e0c70
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Merge branch 'main' into gh-pages
+
+[33mcommit a2e0c7092b212fd40041bb7ca6fbd2a44dd862e4[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    changing structure of the project
+    
+    Change structure of the project to make it more modular and easy to understand.
+    Create a new file model.js to handle the model related code.
+    Webpack configuration is also updated to reflect the changes.
+
+[33mcommit c63436156aefca263207d8df446b6a8f255e14fb[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Improve training model
+    
+    Improve number of units in Layer2 from 32 to 64.
+
+[33mcommit d275c426f48816b8b95c28fb425f970e4fea53b4[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Train model
+
+[33mcommit 7427bb68e865709b47969df364e2835b5453bd73[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Start create model in tensorflowjs
+    
+    Load MNIST data with 10 digits to train model.
+
+[33mcommit ec3185ea4523547308982a6bb74dc5e7ee0fd8f6[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Change drawing function to canvas
+
+[33mcommit 209f65dd45ca6e65976d5b0b281e8c25749f83c9[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Small changes with html file
+
+[33mcommit 5ac084e441b6e39ef7a2551771f345c888f6287f[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Deployment commit
+
+[33mcommit 87f4b28616db96adcdcd882198c309ba1d0f2b71[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Small fixes
+
+[33mcommit f80d006aeb6c897dac6f0817450e9883ce9d1588[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Create tensorflowjs file
+    
+    Created basic functions to export.
+
+[33mcommit 08f70c4430728a63488ad234fb74263b9ed72890[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Fix display.js bug
+
+[33mcommit ed8751edf52d419d4962da03f2aa26b392dbaf92[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Add trained model
+    
+    Added trained model to models.
+
+[33mcommit af4f8487514fcca5e273bd90ad49812504609308[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Generate data to prediction
+    
+    Data to prediction was generated from draw.
+
+[33mcommit 0b44cbab59c77a285ef609d9ec5bd185efe8b5b1[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Move display function to other file
+    
+    Moved createImgFromGrid to display.js.
+
+[33mcommit e573b865ef9e788010c7cfb3dbc11db611a1dd0f[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Repaired deploy
+
+[33mcommit bab0b702af9c5adab5a7f4f259d939d78faddc4f[m
+Merge: 0497451 d6d1cf7
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Merge branch 'main' into gh-pages
+
+[33mcommit d6d1cf7dfad9bf45f409307120740f382696278d[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Fix wrong image pixel size
+    
+    Set generated image's size to 20 x 20, that fit to MINST data.
+
+[33mcommit 0497451f3a2ec7378a6dd64838346a9a06fa94f9[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Deployment commit
+
+[33mcommit 15cbe5753a77c8951159407b2fb719c6035ece16[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Fixed grid generate
+    
+    Grid size increased to 100x100 and set drawing circle.
+
+[33mcommit 9ead3f8eb20b85ee5d557a6f8f12c41d5a3c1887[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Remove wrong file
+
+[33mcommit 346ad972bfb3a0437e847d394e38fc8fd8297b63[m
+Author: kroxon <123456789+odin@users.noreply.github.com>
+Commit: kroxon <123456789+odin@users.noreply.github.com>
+
+    Add hello_world.txt
+
+[33mcommit e5b6e583a2ed6cd00604cad94a1be4fa9128ece9[m
+Author: Paweł Krok <kadetkroksapsp2@gmail.com>
+Commit: Paweł Krok <kadetkroksapsp2@gmail.com>
+
+    Create grid for drawing
+    
+    Created grid for drawing and button to generate image.
+
+[33mcommit f2bcf01af49d6ca42693d2b9cd43ee932e5ec2b3[m
+Author: Paweł Krok <kadetkroksapsp2@gmail.com>
+Commit: Paweł Krok <kadetkroksapsp2@gmail.com>
+
+    Preparing to dev
+
+[33mcommit acd4f9e9619d5da06926eed0ab47049bec0ef81c[m
+Author: Paweł Krok <kadetkroksapsp2@gmail.com>
+Commit: Paweł Krok <kadetkroksapsp2@gmail.com>
+
+    Remove unnecessary images
+    
+    Removes images from repo
+
+[33mcommit 2120c4239a568d13b4fc69e2fbbb900fb91218ec[m
+Author: Paweł Krok <kadetkroksapsp2@gmail.com>
+Commit: Paweł Krok <kadetkroksapsp2@gmail.com>
+
+    First initial commit
+
+[33mcommit fa89418e2658bca9dbadcffdd42e31a6b0971d80[m
+Author: kroxon <59028898+kroxon@users.noreply.github.com>
+Commit: GitHub <noreply@github.com>
+
+    Initial commit
