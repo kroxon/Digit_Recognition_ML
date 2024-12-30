@@ -4,7 +4,8 @@ This project is a web-based digit recognition application that allows users to d
 
 ![alt text](image.png)
 
-`https://kroxon.github.io/Digit_Recognition_ML/`
+
+[Digit Recognition](https://kroxon.github.io/Digit_Recognition_ML/)
 
 ## Features
 
