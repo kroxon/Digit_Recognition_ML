@@ -197,18 +197,18 @@ canvas {
   #predictionList { height: 180px; min-height: 180px; }
 }
 
-/* === Buttons layout: two buttons at 40% each with even spacing === */
+/* === Buttons layout: two buttons at 40% each with more spacing === */
 .parent > .buttons {
   display: flex;
-  justify-content: space-evenly; /* distribute remaining 20% evenly (left/between/right) */
+  justify-content: center; /* center the pair */
   align-items: stretch;
-  gap: 0; /* spacing handled by space-evenly */
+  gap: 16px; /* add space between buttons */
 }
 .parent > .buttons button {
   flex: 0 0 40%;
   max-width: 40%;
   width: 40%;
-  margin: 0; /* let space-evenly handle spacing */
+  margin: 0; /* spacing handled by gap */
 }
 
 /* Responsive: allow wrapping and adjust widths */
@@ -237,4 +237,56 @@ canvas {
     flex: 1 1 100%;
     max-width: 100%;
   }
+}
+
+/* === Center contents in their grid cells === */
+.parent > * { justify-self: center; align-self: center; }
+.parent > .canvas-wrap { justify-self: center; align-self: center; }
+
+/* Add horizontal outer margin to charts */
+#predictionList { margin-inline: 16px; }
+
+/* Keep mobile stacking unaffected */
+@media (max-width: 900px) {
+  #predictionList { margin-inline: 12px; }
+}
+
+/* === Chart container constraints & wrapping fixes === */
+#predictionList {
+  /* override global centering to avoid shrink-to-content loops */
+  justify-self: start;
+  align-self: start;
+  /* do not let content force grid track expansion */
+  min-width: 0;
+  /* fill available space but never exceed a sane max on desktop */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* inner breathing room so chart doesn't touch cell edge */
+  padding-right: 12px;
+  /* avoid clipping: allow scrollbars if content temporarily overflows */
+  overflow: auto;
+}
+
+@media (max-width: 900px) {
+  #predictionList { padding-right: 10px; }
+}
+
+/* ensure chart canvas never exceeds container */
+#predictionList canvas#chart {
+  max-width: 100%;
+  height: 100%; /* match container height (set above via existing rules) */
+}
+
+/* prevent other grid children from forcing track growth */
+.parent > .buttons,
+#resultPreview {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* help long labels wrap instead of overflow */
+#predictionLabel { 
+  overflow-wrap: anywhere; 
+  word-break: break-word; 
 }
