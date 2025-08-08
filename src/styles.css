@@ -1,177 +1,240 @@
-html {
-  background-color: rgba(233, 155, 188, 0);
+:root {
+  --bg-start: #0f0b1a;
+  --bg-end: #1b1030;
+  --text: #eae6f2;
+  --muted: #b9a7d9;
+  --accent: #9b5cff;
+  --accent-2: #ff6ec7;
+  --panel: #1a1230;
+  --panel-border: #3a1c6b;
+  --shadow: rgba(0, 0, 0, 0.35);
 }
+
+html { background-color: transparent; }
 
 body {
   display: flex;
   flex-grow: 1;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   flex-direction: column;
-  background: #32104e;
+  margin: 0;
+  background: linear-gradient(140deg, var(--bg-start), var(--bg-end));
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
-#grid-container,
-.img-canvas {
-  margin: 20px auto;
-  display: flex;
-  flex-flow: column nowrap;
-  width: min(40vw, 80vh);
-  height: min(40vw, 80vh);
-  background-color: beige;
-}
+/* Utility */
+.is-hidden { display: none !important; }
+
+/* Optional legacy containers kept for compatibility */
+#grid-container, .img-canvas { display: none; }
 
 button {
-  border: none;
-  background-color: #451077;
-  color: #ffff;
-  padding: 10px 20px;
-  font-size: 20px;
+  border: 1px solid color-mix(in oklab, var(--accent) 60%, white 0%);
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 40%, black 15%), color-mix(in oklab, var(--accent) 25%, black 25%));
+  color: #fff;
+  padding: 10px 14px; /* smaller */
+  font-size: 14px;    /* smaller */
   font-weight: 700;
-  width: 150px;
+  min-width: 120px;   /* smaller */
   border-radius: 10px;
-  margin: 20px auto 20px auto;
+  margin: 6px;
   position: relative;
-  box-shadow: 5px 5px 5px #5b026d;
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px var(--shadow);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+  cursor: pointer;
 }
-
-
-button:hover {
-  box-shadow: 0px 2px 20px #5b026d;
-  top: 3px;
-}
-
-button:active {
-  box-shadow: none;
-  top: 5px;
-}
+button:hover { transform: translateY(-1px); box-shadow: 0 10px 26px var(--shadow); }
+button:active { transform: translateY(1px); box-shadow: 0 6px 14px var(--shadow); }
+button:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
 
 canvas {
-  border: 1px solid black;
-  cursor: crosshair;
+  border-radius: 12px;
+  background: #0c0c12; /* dark so white strokes are visible */
+  box-shadow: 0 16px 40px var(--shadow);
 }
 
-.black {
-  background-color: white;
+/* Pixel preview colors (naming kept to match existing JS) */
+.black { background-color: #fff; }
+.white { background-color: transparent; }
+
+/* Main layout */
+.parent {
+  display: grid;
+  grid-template-columns: 1.25fr 0.9fr 0.9fr 0.9fr; /* densified columns without empty spacer */
+  grid-template-rows: auto auto 1fr;
+  gap: 12px; /* tighter gap */
+  width: min(1200px, 92vw);
+  padding: 24px 16px 48px;
 }
 
-.white {
-  background-color: #32104e;
+#drawingCanvas { grid-area: 1 / 1 / 3 / 3; } /* Canvas keeps spanning first two cols */
+
+/* Combined preview container */
+#resultPreview {
+  grid-area: 1 / 2 / 3 / 3; /* spans two rows to hold digit + label */
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 8px;
+  align-content: start;
+  background: color-mix(in oklab, var(--panel) 92%, black 0%);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px var(--shadow);
+  padding: 12px;
+  align-self: start;
+  z-index: 1;
+  width: max-content;        /* shrink-wrap to digit + label */
+  justify-self: start;       /* do not stretch to full column */
+  justify-items: start;      /* align inner content to left */
 }
 
-#digitResult {
+#resultPreview #digitResult {
+  width: 160px;
+  height: 160px;
   display: grid;
   grid-template-columns: repeat(20, 1fr);
   grid-template-rows: repeat(20, 1fr);
-  width: 150px;
-  height: 150px;
 }
 
-#digitGrid div {
-  width: 20px;
-  height: 20px;
+#resultPreview #predictionLabel {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
-.prediction {
-  font-size: 20px;
-  font-weight: 700;
-  color: #D98555;
-  text-align: center;
-}
+/* Remove old grid positions to avoid conflicts */
+#digitResult { grid-area: auto; }
+#predictionLabel { grid-area: auto; }
 
-#predictions {
+/* Canvas wrapper and hint */
+.canvas-wrap { position: relative; width: max-content; }
+.canvas-hint {
+  position: absolute;
+  inset: 0;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.parent {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, min-content);
-  gap: 10px;
-  width: 80%;
-  max-width: 1200px;
-  padding-top: 20px;
-}
-
-#drawingCanvas {
-  grid-area: 1 / 1 / 3 / 3;
-}
-
-.buttons {
-  grid-area: 3 / 1 / 4 / 3;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: min-content;
-}
-
-#digitResult {
-  grid-area: 1 / 3 / 2 / 4;
-}
-
-#predictionLabel {
-  grid-area: 1 / 4 / 2 / 6;
-  color: white;
-  font-size: 1.6em;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  text-align: center;
+  padding: 12px;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.canvas-hint.is-hidden { opacity: 0; }
+
+/* Keep chart in place; allow internal growth */
+#predictionList { position: relative; }
+#predictionList canvas#chart { display: block; width: 100%; height: auto; }
+
+#predictions { display: none; }
+.prediction { font-size: 18px; font-weight: 600; color: var(--accent-2); text-align: center; }
+
+/* Reveal animations: keep simple opacity so charts don't slide */
+#digitResult:not(.is-hidden),
+#predictionLabel:not(.is-hidden) { animation: fadeInOpacity .2s ease-out; }
+@keyframes fadeInOpacity { from { opacity: 0;} to { opacity: 1;} }
+
+/* === 3 cols x 2 rows layout (overrides) === */
+.parent {
+  grid-template-columns: 1.3fr 1fr 1fr; /* 3 columns */
+  grid-template-rows: auto auto;       /* 2 rows */
 }
 
-#predictionList {
-  grid-area: 2 / 3 / 4 / 6;
+/* Grid items (use direct children of .parent) */
+.parent > .canvas-wrap { grid-area: 1 / 1 / 2 / 2; }
+.parent > .buttons     { grid-area: 2 / 1 / 3 / 2; }
+#resultPreview         { grid-area: 1 / 2 / 2 / 3; }
+#predictionList        { grid-area: 1 / 3 / 2 / 4; height: 280px; min-height: 280px; }
+
+/* Keep buttons compact in their single cell */
+.parent > .buttons {
+  grid-template-columns: repeat(2, minmax(120px, auto));
+  justify-content: start;
+  align-items: start;
 }
 
-canvas#chart {
-  width: 100%;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
+/* Mobile: stack vertically in this order: canvas, buttons, preview, chart */
+@media (max-width: 900px) {
   .parent {
+    display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    width: 100%;
-    padding: 10px;
-    justify-items: center;
-    margin-top: 0;
-    padding: 10px;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      "canvas"
+      "buttons"
+      "preview"
+      "chart";
   }
+  .parent > .canvas-wrap { grid-area: canvas; }
+  .parent > .buttons     { grid-area: buttons; }
+  #resultPreview         { grid-area: preview; min-height: 180px; width: fit-content; margin: 8px auto; z-index: 2; }
+  #predictionList        { grid-area: chart; width: 100%; }
+}
+@media (max-width: 520px) {
+  .parent > .buttons { grid-template-columns: 1fr; }
+  #predictionList    { height: 200px; min-height: 200px; }
+}
 
-  #drawingCanvas {
-    grid-area: 1 / 1 / 2 / 2;
-    width: 100%;
-    height: auto;
-  }
+/* === Layout tweaks: narrower preview column, centered full-width buttons, smaller mobile charts === */
+.parent { grid-template-columns: 1.3fr 0.8fr 1fr; }
 
-  .buttons {
-    grid-area: 2 / 1 / 3 / 2;
-    grid-template-rows: 1fr;
-    justify-items: center;
-  }
+.parent > .buttons {
+  grid-template-columns: 1fr 1fr; /* two equal columns */
+  justify-content: stretch;       /* center via stretching */
+  justify-items: stretch;
+  align-items: stretch;
+}
+.parent > .buttons button { width: 100%; margin: 0; }
 
-  button{
-    width: 80%;
-    margin: 20px;
-    font-size: 1em;
-    padding: 5px;
-  }
+@media (max-width: 900px) {
+  #predictionList { height: 200px; min-height: 200px; }
+}
+@media (max-width: 520px) {
+  #predictionList { height: 180px; min-height: 180px; }
+}
 
-  #digitResult {
-    grid-area: 3 / 1 / 4 / 2;
-    flex-direction: row;
+/* === Buttons layout: two buttons at 40% each with even spacing === */
+.parent > .buttons {
+  display: flex;
+  justify-content: space-evenly; /* distribute remaining 20% evenly (left/between/right) */
+  align-items: stretch;
+  gap: 0; /* spacing handled by space-evenly */
+}
+.parent > .buttons button {
+  flex: 0 0 40%;
+  max-width: 40%;
+  width: 40%;
+  margin: 0; /* let space-evenly handle spacing */
+}
+
+/* Responsive: allow wrapping and adjust widths */
+@media (max-width: 900px) {
+  .parent > .buttons {
+    display: flex !important;
     flex-wrap: wrap;
+    justify-content: center; /* center group */
+    align-items: center;
+    gap: 12px;
+    min-height: 56px; /* ensure row has height */
+    padding: 8px 0;
+    z-index: 2; /* stay above adjacent panels if overlapping */
   }
-
-  #predictionLabel {
-    grid-area: 4 / 1 / 5 / 2;
-    font-size: 1.2em;
+  .parent > .buttons button {
+    flex: 1 1 48%;
+    max-width: 48%;
+    width: auto;
   }
-
-  #predictionList {
-    grid-area: 5 / 1 / 6 / 2;
+}
+@media (max-width: 520px) {
+  .parent > .buttons {
+    justify-content: stretch;
+  }
+  .parent > .buttons button {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 }

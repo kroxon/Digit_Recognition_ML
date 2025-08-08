@@ -7,75 +7,53 @@ const lineColor = "white";
 export function setupCanvas(onPredict) {
     const canvas = document.getElementById('drawingCanvas');
     const ctx = canvas.getContext('2d');
+    const hint = document.getElementById('canvasHint');
     ctx.fillStyle = 'white';  // 
+    // Better stroke quality
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
 
-    canvas.addEventListener("mousedown", (e) => {
+    const beginDraw = (x, y) => {
         isDrawing = true;
-        [lastX, lastY] = [e.offsetX, e.offsetY];
-        canvas.style.cursor = 'crosshair'; // change cursor to crosshair
-    });
+        [lastX, lastY] = [x, y];
+        canvas.style.cursor = 'crosshair';
+        hint?.classList.add('is-hidden');
+    };
 
-    canvas.addEventListener("mousemove", (e) => {
+    const drawTo = (x, y) => {
         if (!isDrawing) return;
-        const x = e.offsetX;
-        const y = e.offsetY;
-
         ctx.beginPath();
         ctx.moveTo(lastX, lastY);
         ctx.lineTo(x, y);
         ctx.lineWidth = lineWidth;
         ctx.strokeStyle = lineColor;
         ctx.stroke();
-
         [lastX, lastY] = [x, y];
-    });
+    };
 
-    canvas.addEventListener("mouseup", () => {
-        isDrawing = false;
-        canvas.style.cursor = 'default';
-    });
-
-    canvas.addEventListener("mouseout", () => {
-        isDrawing = false;
-        canvas.style.cursor = 'default';
-    });
+    // Mouse events
+    canvas.addEventListener("mousedown", (e) => beginDraw(e.offsetX, e.offsetY));
+    canvas.addEventListener("mousemove", (e) => drawTo(e.offsetX, e.offsetY));
+    canvas.addEventListener("mouseup", () => { isDrawing = false; canvas.style.cursor = 'default'; });
+    canvas.addEventListener("mouseout", () => { isDrawing = false; canvas.style.cursor = 'default'; });
 
     // Touch events
     canvas.addEventListener("touchstart", (e) => {
-        isDrawing = true;
         const touch = e.touches[0];
         const rect = canvas.getBoundingClientRect();
-        [lastX, lastY] = [touch.clientX - rect.left, touch.clientY - rect.top];
-        canvas.style.cursor = 'crosshair'; // change cursor to crosshair
+        beginDraw(touch.clientX - rect.left, touch.clientY - rect.top);
     });
 
     canvas.addEventListener("touchmove", (e) => {
         if (!isDrawing) return;
         const touch = e.touches[0];
         const rect = canvas.getBoundingClientRect();
-        const x = touch.clientX - rect.left;
-        const y = touch.clientY - rect.top;
-
-        ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(x, y);
-        ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = lineColor;
-        ctx.stroke();
-
-        [lastX, lastY] = [x, y];
+        drawTo(touch.clientX - rect.left, touch.clientY - rect.top);
         e.preventDefault(); // Prevent scrolling when drawing
     });
 
-    canvas.addEventListener("touchend", () => {
-        isDrawing = false;
-        canvas.style.cursor = 'default';
-    });
-
-    canvas.addEventListener("touchcancel", () => {
-        isDrawing = false;
-        canvas.style.cursor = 'default';
-    });
+    canvas.addEventListener("touchend", () => { isDrawing = false; canvas.style.cursor = 'default'; });
+    canvas.addEventListener("touchcancel", () => { isDrawing = false; canvas.style.cursor = 'default'; });
 
     const predictButton = document.getElementById('predictButton');
     predictButton.addEventListener('click', onPredict);
@@ -140,4 +118,6 @@ export function clearCanvas() {
     const canvas = document.getElementById('drawingCanvas');
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const hint = document.getElementById('canvasHint');
+    hint?.classList.remove('is-hidden');
 }

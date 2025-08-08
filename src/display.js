@@ -28,6 +28,10 @@ let chartInstance = null;
 
 
 export function displayPredictions(predictionsArray, largestPredictionIndex) {
+    // Ensure the combined preview panel is visible
+    const resultPreview = document.getElementById('resultPreview');
+    resultPreview?.classList.remove('is-hidden');
+
     const label = document.getElementById('predictionLabel');
     label.innerHTML = `Predicted digit: ${largestPredictionIndex}<br>with ${(predictionsArray[0][largestPredictionIndex] * 100).toFixed(2)}% of certainty`;
 
@@ -51,21 +55,20 @@ export function displayPredictions(predictionsArray, largestPredictionIndex) {
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false, // fill the container height we defined in CSS
+            animation: { duration: 500 },
             scales: {
                 x: {
                     ticks: {
-                        font: {
-                            size: 16,
-                        },
+                        font: { size: 16 },
                         color: 'white',
                     }
                 },
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        font: {
-                            size: 16,
-                        },
+                        font: { size: 16 },
                         color: 'white',
                     }
                 }
@@ -73,9 +76,7 @@ export function displayPredictions(predictionsArray, largestPredictionIndex) {
             plugins: {
                 legend: {
                     labels: {
-                        font: {
-                            size: 16,
-                        },
+                        font: { size: 16 },
                         color: 'white',
                     }
                 }
