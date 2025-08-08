@@ -1,10 +1,8 @@
 import { displayDigit, displayPredictions } from './display';
-import dataX from './data/X.json';
-import dataY from './data/y.json';
 
 export async function loadData() {
-    const XResponse = await fetch('/data/X.json');
-    const yResponse = await fetch('/data/y.json');
+    const XResponse = await fetch('./data/X.json');
+    const yResponse = await fetch('./data/y.json');
 
     let X = await XResponse.json();
     let y = await yResponse.json();

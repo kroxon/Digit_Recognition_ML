@@ -42,26 +42,10 @@ This project is a web-based digit recognition application that allows users to d
 
 3. Start the development server:
    ```bash
-   npm start
+   npm run dev
    ```
 
 4. Open your browser and navigate to `http://localhost:8080` to see the application in action.
-
-### Deployment
-
-To deploy the application to GitHub Pages:
-
-1. Build the project:
-   ```bash
-   npm run build
-   ```
-
-2. Push the `dist` folder to the `gh-pages` branch:
-   ```bash
-   npm run deploy
-   ```
-
-3. Your application will be available at `https://kroxon.github.io/Digit_Recognition_ML/`.
 
 ## Usage
 
