@@ -52,7 +52,9 @@ button:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; 
 canvas {
   border-radius: 12px;
   background: #0c0c12; /* dark so white strokes are visible */
-  box-shadow: 0 16px 40px var(--shadow);
+  /* subtle light edge + soft light glow to emphasize boundary */
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.06), 0 4px 14px rgba(255,255,255,0.08), 0 16px 40px var(--shadow);
+  border: 1px solid rgba(255,255,255,0.10);
 }
 
 /* Pixel preview colors (naming kept to match existing JS) */
