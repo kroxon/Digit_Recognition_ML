@@ -7,16 +7,18 @@ export async function loadData() {
     let X = await XResponse.json();
     let y = await yResponse.json();
 
+    const rawX = X.map(r => r.slice()); // keep raw copy for preview
+
     X = X.map(row => row.map(value => value > 0.5 ? 1 : 0));
 
     if (Array.isArray(y) && Array.isArray(y[0])) {
         y = y.map(row => row[0]);
     }
 
-    X = tf.tensor2d(X);
-    y = tf.tensor1d(y);
+    const tfX = tf.tensor2d(X);
+    const tfY = tf.tensor1d(y);
 
-    return { X, y };
+    return { X: tfX, y: tfY, rawX };
 }
 
 export function createModel() {
