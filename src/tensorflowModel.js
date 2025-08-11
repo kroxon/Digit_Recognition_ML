@@ -50,6 +50,50 @@ export async function trainModel(model, X, y) {
     return history;
 }
 
+export async function trainModelWithUI(model, X, y, { epochs = 40, batchSize = 32 } = {}) {
+    const panel = document.getElementById('trainingPanel');
+    const ep = document.getElementById('tpEpoch');
+    const prog = document.getElementById('tpProgress');
+    const metricsBox = document.getElementById('tpMetrics');
+    const log = document.getElementById('tpLog');
+    const timeEl = document.getElementById('tpTime');
+    panel?.classList.remove('is-hidden');
+    ep.textContent = `0/${epochs}`;
+    prog.value = 0; prog.max = 100;
+    metricsBox.innerHTML = '';
+    log.textContent = '';
+    const start = performance.now();
+
+    model.compile({
+        loss: 'sparseCategoricalCrossentropy',
+        optimizer: tf.train.adam(0.0005),
+        metrics: ['accuracy']
+    });
+
+    const history = await model.fit(X, y, {
+        epochs, batchSize, shuffle: true,
+        callbacks: {
+            onEpochEnd: (epoch, logs) => {
+                const acc = (logs.acc ?? logs.accuracy ?? 0).toFixed(4);
+                ep.textContent = `${epoch + 1}/${epochs}`;
+                prog.value = ((epoch + 1) / epochs) * 100;
+                const elapsed = ((performance.now() - start) / 1000).toFixed(1);
+                timeEl.textContent = `${elapsed}s`;
+                metricsBox.innerHTML = `<span>loss: ${logs.loss.toFixed(4)}</span><span>acc: ${acc}</span>`;
+                log.textContent += `Epoch ${epoch + 1}: loss=${logs.loss.toFixed(4)} acc=${acc}\n`;
+                log.scrollTop = log.scrollHeight;
+            },
+            onTrainEnd: () => {
+                const total = ((performance.now() - start) / 1000).toFixed(1);
+                metricsBox.innerHTML += `<span>done</span>`;
+                timeEl.textContent = `${total}s total`;
+            }
+        }
+    });
+
+    return history;
+}
+
 export async function predictDigitFromXData(dataX, model, index = 4015) {
     const imageOfDigit = dataX.slice([index, 0], [1, 400]);
 

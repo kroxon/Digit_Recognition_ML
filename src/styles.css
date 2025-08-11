@@ -292,3 +292,14 @@ canvas {
   overflow-wrap: anywhere; 
   word-break: break-word; 
 }
+
+/* Training panel and section */
+.training-section { margin: 40px auto 80px; width: min(900px,92vw); padding: 16px 20px 28px; background: rgba(255,255,255,0.03); border:1px solid var(--panel-border); border-radius:16px; box-shadow:0 8px 32px -8px var(--shadow); }
+.training-section h2 { margin:0 0 12px; font-size:1.25rem; font-weight:600; letter-spacing:.5px; }
+.training-section #trainButton { margin: 4px 0 16px; }
+.training-panel { background:rgba(0,0,0,0.25); border:1px solid color-mix(in oklab,var(--panel-border) 70%,#fff 0%); padding:14px 16px 18px; border-radius:14px; font-size:13px; }
+.training-panel .tp-header { font-weight:600; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:12px; }
+.training-panel progress { width:100%; height:12px; margin:4px 0 12px; border-radius:6px; overflow:hidden; }
+.training-panel #tpMetrics { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+.training-panel #tpMetrics span { background:rgba(255,255,255,0.07); padding:4px 8px; border-radius:8px; font-family:monospace; }
+.training-panel #tpLog { max-height:180px; overflow:auto; margin:0; background:rgba(0,0,0,0.25); padding:8px 10px; border-radius:8px; font-family:monospace; line-height:1.25; }

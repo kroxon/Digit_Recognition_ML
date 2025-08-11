@@ -38,6 +38,17 @@
             <canvas id="chart"></canvas>
         </div>
     </div>
+    <!-- New training section -->
+    <section id="trainingSection" class="training-section">
+        <h2>Optional: Train a New Model</h2>
+        <button id="trainButton">Train New Model</button>
+        <div id="trainingPanel" class="training-panel is-hidden">
+            <div class="tp-header">Epoch: <span id="tpEpoch">0/0</span> | Elapsed: <span id="tpTime">0s</span></div>
+            <progress id="tpProgress" value="0" max="100"></progress>
+            <div id="tpMetrics"></div>
+            <pre id="tpLog"></pre>
+        </div>
+    </section>
 </body>
 
 </html>
